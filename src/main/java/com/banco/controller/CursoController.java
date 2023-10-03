@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banco.model.Curso;
+import com.banco.model.dto.CursoDTO;
+import com.banco.model.mapper.CursoMapper;
 import com.banco.services.CursoServices;
 
 @RestController
@@ -21,6 +23,9 @@ public class CursoController {
 
 	@Autowired
 	private CursoServices cursoServices;
+	
+	@Autowired
+	private CursoMapper cursoMapper;
 
 	@GetMapping
 	public ResponseEntity<List<Curso>> getCursos() {
@@ -29,9 +34,10 @@ public class CursoController {
 		return ResponseEntity.ok().body(lista);
 	}
 	
-	@PostMapping("/sava")
-	public ResponseEntity<Curso> save(@RequestBody Curso curso) throws URISyntaxException{
-		Curso novoCurso = cursoServices.save(curso);
+	@PostMapping("/salva")
+	public ResponseEntity<Curso> save(@RequestBody CursoDTO cursoDTO) throws URISyntaxException{
+		
+		Curso novoCurso = cursoServices.save(cursoMapper.mapCursoDTOToCurso(cursoDTO));
 		
 		return ResponseEntity.created(new URI("curso/salva/" + novoCurso.getId())).body(novoCurso);
 	}
