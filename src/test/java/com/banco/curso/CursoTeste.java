@@ -1,8 +1,8 @@
 package com.banco.curso;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,14 +15,16 @@ class CursoTeste {
 	CursoServices cursoServices;
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	void testaCursosNaoVazio() {
 		Curso curso = new Curso();
 
 		assertNotNull(curso);
+	}
+	
+	@Test
+	void novoCursoSemAlunos() {
+		Curso curso = new Curso();
+		
+		Assertions.assertTrue(curso.getAlunos().isEmpty());
 	}
 }
